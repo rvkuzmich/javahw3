@@ -51,7 +51,7 @@ public class AuthorsController {
         authorDto.setFirstName(firstName);
         authorDto.setLastName(lastName);
         authorDto.setId(authorId);
-        authorDto = authorService.update(authorId, authorDto);
+        authorDto = authorService.update(authorDto);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(authorDto);
     }
 

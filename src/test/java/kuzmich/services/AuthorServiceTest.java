@@ -81,22 +81,17 @@ class AuthorServiceTest {
 
         AuthorService authorService = new AuthorService(authorRepository, authorMapper);
 
-        AuthorDto updatedAuthorDto = new AuthorDto(1,"Jane", "Doe", List.of(Long.parseLong("1")));
+        Author author = new Author(1, "John", "Doe");
+        author.setBooks(List.of(new Book(1)));
+        AuthorDto authorDto = new AuthorDto(1,"John", "Doe", List.of(Long.parseLong("1")));
 
-        Author authorToUpdate = new Author(1, "Jane", "Doe");
-        authorToUpdate.setBooks(List.of(new Book(1)));
-        Author updatedAuthor = new Author(1, "Jane", "Doe");
-        updatedAuthor.setBooks(List.of(new Book(1)));
+        Mockito.when(authorMapper.toDto(author)).thenReturn(authorDto);
+        Mockito.when(authorMapper.toEntity(authorDto)).thenReturn(author);
+        Mockito.when(authorRepository.save(author)).thenReturn(new Author(1, "John", "Doe"));
 
-        Mockito.when(authorMapper.toEntity(updatedAuthorDto)).thenReturn(authorToUpdate);
-        Mockito.when(authorMapper.toDto(authorToUpdate)).thenReturn(updatedAuthorDto);
-        Mockito.when(authorRepository.save(updatedAuthor)).thenReturn(updatedAuthor);
+        Author actual = authorMapper.toEntity(authorService.save(authorDto));
 
-        authorService.save(updatedAuthorDto);
-
-        Mockito.verify(authorMapper).toEntity(updatedAuthorDto);
-        Mockito.verify(authorMapper).toDto(updatedAuthor);
-        Mockito.verify(authorRepository).save(updatedAuthor);
+        assertEquals(author, actual);
     }
 
     @Test

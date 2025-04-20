@@ -45,14 +45,15 @@ public class BooksController {
     }
 
     @PutMapping("/{bookId}")
-    public ResponseEntity<Void> update(@PathVariable("bookId") Long bookId,
+    public ResponseEntity<BookDto> update(@PathVariable("bookId") Long bookId,
                                        @RequestParam("title") String title,
                                        @RequestParam("page_count") Integer pageCount) {
         BookDto bookDto = new BookDto();
+        bookDto.setId(bookId);
         bookDto.setTitle(title);
         bookDto.setPageCount(pageCount);
-        bookService.update(bookId, bookDto);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+        bookDto = bookService.update(bookDto);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(bookDto);
     }
 
     @DeleteMapping("/{bookId}")
