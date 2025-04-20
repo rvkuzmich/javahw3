@@ -44,15 +44,15 @@ public class AuthorsController {
     }
 
     @PutMapping("/{authorId}")
-    public ResponseEntity<Void> update(@PathVariable("authorId") Long authorId,
+    public ResponseEntity<AuthorDto> update(@PathVariable("authorId") Long authorId,
                                        @RequestParam("first_name") String firstName,
                                        @RequestParam("last_name") String lastName) {
         AuthorDto authorDto = new AuthorDto();
         authorDto.setFirstName(firstName);
         authorDto.setLastName(lastName);
         authorDto.setId(authorId);
-        authorService.update(authorId, authorDto);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+        authorDto = authorService.update(authorId, authorDto);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(authorDto);
     }
 
 

@@ -37,10 +37,11 @@ public class AuthorService {
     }
 
     @Transactional
-    public void update(long id, AuthorDto authorDto) {
+    public AuthorDto update(long id, AuthorDto authorDto) {
         Author author = authorMapper.toEntity(authorDto);
         author.setId(id);
-        authorRepository.save(author);
+        author = authorRepository.save(author);
+        return authorMapper.toDto(author);
     }
 
     @Transactional
