@@ -39,13 +39,6 @@ public class BookService {
     }
 
     @Transactional
-    public BookDto update(BookDto bookDto) {
-        Book book = bookMapper.toEntity(bookDto);
-        book = bookRepository.save(book);
-        return bookMapper.toDto(book);
-    }
-
-    @Transactional
     public void delete(long id) {
         bookRepository.deleteById(id);
     }

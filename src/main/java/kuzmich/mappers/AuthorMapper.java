@@ -20,11 +20,9 @@ public interface AuthorMapper {
     @Mapping(target = "books", ignore = true)
     Author toEntity(AuthorDto authorDto);
 
-    @Mapping(target = "books", ignore = true)
-    void updateEntity(AuthorDto authorDto, @MappingTarget Author author);
 
     @Named("booksToBookIdList")
-    default List<Long> booksToIds(List<Book> books) {
+    default List<Long> booksToIdList(List<Book> books) {
         if (books == null) return Collections.emptyList();
         return books.stream()
                 .map(Book::getId)

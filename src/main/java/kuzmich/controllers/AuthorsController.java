@@ -35,7 +35,7 @@ public class AuthorsController {
     @PostMapping
     public ResponseEntity<AuthorDto> save(@RequestParam("first_name") String firstName,
                                           @RequestParam("last_name") String lastName) {
-        AuthorDto authorDto= new AuthorDto();
+        AuthorDto authorDto = new AuthorDto();
         authorDto.setFirstName(firstName);
         authorDto.setLastName(lastName);
         authorDto.setId(0L);
@@ -51,7 +51,7 @@ public class AuthorsController {
         authorDto.setFirstName(firstName);
         authorDto.setLastName(lastName);
         authorDto.setId(authorId);
-        authorDto = authorService.update(authorDto);
+        authorDto = authorService.save(authorDto);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(authorDto);
     }
 

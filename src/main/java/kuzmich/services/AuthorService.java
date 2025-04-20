@@ -2,7 +2,6 @@ package kuzmich.services;
 
 import kuzmich.dto.AuthorDto;
 import kuzmich.mappers.AuthorMapper;
-import kuzmich.models.Author;
 import kuzmich.repositories.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,11 +32,6 @@ public class AuthorService {
 
     @Transactional
     public AuthorDto save(AuthorDto authorDto) {
-        return authorMapper.toDto(authorRepository.save(authorMapper.toEntity(authorDto)));
-    }
-
-    @Transactional
-    public AuthorDto update(AuthorDto authorDto) {
         return authorMapper.toDto(authorRepository.save(authorMapper.toEntity(authorDto)));
     }
 

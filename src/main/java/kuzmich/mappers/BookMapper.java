@@ -13,7 +13,7 @@ public interface BookMapper {
     @Mapping(source = "author", target = "authorId", qualifiedByName = "mapAuthorToAuthorId")
     BookDto toDto(Book book);
 
-    @Mapping(source = "author", target = "author", qualifiedByName = "mapAuthorIdToAuthor")
+    @Mapping(source = "authorId", target = "author", qualifiedByName = "mapAuthorIdToAuthor")
     Book toEntity(BookDto bookDto);
 
     @Named("mapAuthorToAuthorId")

@@ -20,35 +20,29 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AuthorServiceTest {
 
+    private final AuthorRepository authorRepository = Mockito.mock(AuthorRepository.class);
+    private final AuthorMapper authorMapper = Mockito.mock(AuthorMapper.class);
+    private final AuthorService authorService = new AuthorService(authorRepository, authorMapper);
+
 
     @Test
     void findAll() {
-        AuthorRepository authorRepository = Mockito.mock(AuthorRepository.class);
-        AuthorMapper authorMapper = Mockito.mock(AuthorMapper.class);
-
-        AuthorService authorService = new AuthorService(authorRepository, authorMapper);
-
         Author author = new Author(1, "John", "Doe");
-        author.setBooks(List.of(new Book(1)));
-        AuthorDto authorDto = new AuthorDto(1,"John", "Doe", List.of(Long.parseLong("1")));
+        author.setBooks(List.of(new Book(1L)));
+        AuthorDto authorDto = new AuthorDto(1L,"John", "Doe", List.of(Long.parseLong("1")));
         List<AuthorDto> authorDtoList = List.of(authorDto);
 
         Mockito.when(authorRepository.findAll()).thenReturn(List.of(author));
-        Mockito.when(authorMapper.toDto(author)).thenReturn(authorDtoList.getFirst());
+        Mockito.when(authorMapper.toDto(author)).thenReturn(authorDto);
 
         assertEquals(authorDtoList, authorService.findAll());
     }
 
     @Test
     void findOne() {
-        AuthorRepository authorRepository = Mockito.mock(AuthorRepository.class);
-        AuthorMapper authorMapper = Mockito.mock(AuthorMapper.class);
-
-        AuthorService authorService = new AuthorService(authorRepository, authorMapper);
-
         Author author = new Author(1, "John", "Doe");
-        author.setBooks(List.of(new Book(1)));
-        AuthorDto authorDto = new AuthorDto(1,"John", "Doe", List.of(Long.parseLong("1")));
+        author.setBooks(List.of(new Book(1L)));
+        AuthorDto authorDto = new AuthorDto(1L,"John", "Doe", List.of(Long.parseLong("1")));
 
         Mockito.when(authorMapper.toDto(author)).thenReturn(authorDto);
         Mockito.when(authorRepository.findById(1L)).thenReturn(Optional.of(author));
@@ -58,14 +52,9 @@ class AuthorServiceTest {
 
     @Test
     void save() {
-        AuthorRepository authorRepository = Mockito.mock(AuthorRepository.class);
-        AuthorMapper authorMapper = Mockito.mock(AuthorMapper.class);
-
-        AuthorService authorService = new AuthorService(authorRepository, authorMapper);
-
-        Author author = new Author(1, "John", "Doe");
-        author.setBooks(List.of(new Book(1)));
-        AuthorDto authorDto = new AuthorDto(1,"John", "Doe", List.of(Long.parseLong("1")));
+        Author author = new Author(1L, "John", "Doe");
+        author.setBooks(List.of(new Book(1L)));
+        AuthorDto authorDto = new AuthorDto(1L,"John", "Doe", List.of(Long.parseLong("1")));
 
         Mockito.when(authorMapper.toDto(author)).thenReturn(authorDto);
         Mockito.when(authorMapper.toEntity(authorDto)).thenReturn(author);
@@ -75,37 +64,13 @@ class AuthorServiceTest {
     }
 
     @Test
-    void update() {
-        AuthorRepository authorRepository = Mockito.mock(AuthorRepository.class);
-        AuthorMapper authorMapper = Mockito.mock(AuthorMapper.class);
-
-        AuthorService authorService = new AuthorService(authorRepository, authorMapper);
-
-        Author author = new Author(1, "John", "Doe");
-        author.setBooks(List.of(new Book(1)));
-        AuthorDto authorDto = new AuthorDto(1,"John", "Doe", List.of(Long.parseLong("1")));
-
-        Mockito.when(authorMapper.toDto(author)).thenReturn(authorDto);
-        Mockito.when(authorMapper.toEntity(authorDto)).thenReturn(author);
-        Mockito.when(authorRepository.save(author)).thenReturn(new Author(1, "John", "Doe"));
-
-        Author actual = authorMapper.toEntity(authorService.save(authorDto));
-
-        assertEquals(author, actual);
-    }
-
-    @Test
     void delete() {
-        AuthorRepository authorRepository = Mockito.mock(AuthorRepository.class);
-        AuthorMapper authorMapper = Mockito.mock(AuthorMapper.class);
-
-        AuthorService authorService = new AuthorService(authorRepository, authorMapper);
-
         Long authorId = 1L;
+
         Mockito.doNothing().when(authorRepository).deleteById(authorId);
 
         authorService.delete(authorId);
 
-        Mockito.verify(authorRepository, Mockito.times(1)).deleteById(authorId);
+        Mockito.verify(authorRepository).deleteById(authorId);
     }
 }

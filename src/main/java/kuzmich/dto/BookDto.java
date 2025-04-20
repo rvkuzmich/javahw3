@@ -47,7 +47,7 @@ public class BookDto {
         this.pageCount = pageCount;
     }
 
-    public Long getAuthor() {
+    public Long getAuthorId() {
         return authorId;
     }
 

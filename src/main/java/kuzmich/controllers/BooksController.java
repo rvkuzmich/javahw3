@@ -52,7 +52,7 @@ public class BooksController {
         bookDto.setId(bookId);
         bookDto.setTitle(title);
         bookDto.setPageCount(pageCount);
-        bookDto = bookService.update(bookDto);
+        bookDto = bookService.save(bookDto);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(bookDto);
     }
 

@@ -70,7 +70,9 @@ public class AuthorDto {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         AuthorDto authorDto = (AuthorDto) o;
-        return id == authorDto.id && Objects.equals(firstName, authorDto.firstName) && Objects.equals(lastName, authorDto.lastName);
+        return Objects.equals(id, authorDto.id)
+               && Objects.equals(firstName, authorDto.firstName)
+               && Objects.equals(lastName, authorDto.lastName);
     }
 
     @Override

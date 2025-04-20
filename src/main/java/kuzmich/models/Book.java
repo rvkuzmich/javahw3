@@ -30,6 +30,12 @@ public class Book {
         this.pageCount = pageCount;
     }
 
+    public Book(long id, String title, int pageCount) {
+        this.id = id;
+        this.title = title;
+        this.pageCount = pageCount;
+    }
+
     public Book(long id) {
         this.id = id;
     }
