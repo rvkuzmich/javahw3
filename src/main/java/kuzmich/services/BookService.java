@@ -4,7 +4,6 @@ import kuzmich.dto.BookDto;
 import kuzmich.mappers.BookMapper;
 import kuzmich.models.Author;
 import kuzmich.models.Book;
-import kuzmich.repositories.AuthorRepository;
 import kuzmich.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
