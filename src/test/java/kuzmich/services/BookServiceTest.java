@@ -45,15 +45,37 @@ class BookServiceTest {
 
     @Test
     void save() {
-        Book book = new Book(1L, "Book Title", 200);
-        book.setAuthor(new Author(1L));
+        String title = "Book Title";
+        int pageCount = 200;
+        long authorId = 1L;
+        Book bookToSave = new Book();
+        bookToSave.setTitle(title);
+        bookToSave.setPageCount(pageCount);
+        bookToSave.setAuthor(new Author(1));
+        Book book = new Book(authorId, title, pageCount);
+        book.setAuthor(bookToSave.getAuthor());
         BookDto bookDto = new BookDto(1L, "Book Title", 200, 1L);
 
+        Mockito.when(bookRepository.save(bookToSave)).thenReturn(book);
         Mockito.when(bookMapper.toDto(book)).thenReturn(bookDto);
-        Mockito.when(bookMapper.toEntity(bookDto)).thenReturn(book);
-        Mockito.when(bookRepository.save(book)).thenReturn(book);
 
-        assertEquals(bookDto, bookService.save(bookDto));
+        assertEquals(bookDto, bookService.save(title, pageCount, authorId));
+    }
+
+    @Test
+    void update() {
+        long bookId = 1L;
+        String title = "Book Title";
+        int pageCount = 200;
+        long authorId = 1L;
+        Book bookToUpdate = new Book(bookId, title, pageCount);
+        bookToUpdate.setAuthor(new Author(authorId));
+        BookDto bookDto = new BookDto(1L, "Book Title", 200, 1L);
+
+        Mockito.when(bookRepository.save(bookToUpdate)).thenReturn(bookToUpdate);
+        Mockito.when(bookMapper.toDto(bookToUpdate)).thenReturn(bookDto);
+
+        assertEquals(bookDto, bookService.update(bookId, title, pageCount, authorId));
     }
 
     @Test

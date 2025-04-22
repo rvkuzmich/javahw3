@@ -60,7 +60,7 @@ class BooksControllerTest {
         bookDto.setPageCount(100);
         bookDto.setAuthorId(1L);
 
-        Mockito.when(bookService.save(bookDto)).thenReturn(bookDto);
+        Mockito.when(bookService.save(bookDto.getTitle(), bookDto.getPageCount(), bookDto.getAuthorId())).thenReturn(bookDto);
         ResponseEntity<BookDto> response = booksController.save("Book 1", 100, 1L);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
@@ -73,8 +73,9 @@ class BooksControllerTest {
         bookDto.setPageCount(100);
         bookDto.setAuthorId(1L);
 
-        Mockito.when(bookService.save(bookDto)).thenReturn(bookDto);
-        ResponseEntity<BookDto> response = booksController.update(1L, "Book 1", 100);
+        Mockito.when(bookService.update(bookDto.getId(),
+                bookDto.getTitle(), bookDto.getPageCount(), bookDto.getAuthorId())).thenReturn(bookDto);
+        ResponseEntity<BookDto> response = booksController.update(1L, "Book 1", 100, 1L);
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
 

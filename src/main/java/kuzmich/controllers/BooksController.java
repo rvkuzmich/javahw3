@@ -35,24 +35,16 @@ public class BooksController {
     public ResponseEntity<BookDto> save(@RequestParam("title") String title,
                                         @RequestParam("page_count") Integer pageCount,
                                         @RequestParam("author_id") Long authorId) {
-        BookDto bookDto = new BookDto();
-        bookDto.setId(0L);
-        bookDto.setTitle(title);
-        bookDto.setPageCount(pageCount);
-        bookDto.setAuthorId(authorId);
-        bookDto = bookService.save(bookDto);
+        BookDto bookDto = bookService.save(title, pageCount, authorId);
         return ResponseEntity.status(HttpStatus.CREATED).body(bookDto);
     }
 
     @PutMapping("/{bookId}")
     public ResponseEntity<BookDto> update(@PathVariable("bookId") Long bookId,
-                                       @RequestParam("title") String title,
-                                       @RequestParam("page_count") Integer pageCount) {
-        BookDto bookDto = new BookDto();
-        bookDto.setId(bookId);
-        bookDto.setTitle(title);
-        bookDto.setPageCount(pageCount);
-        bookDto = bookService.save(bookDto);
+                                          @RequestParam("title") String title,
+                                          @RequestParam("page_count") Integer pageCount,
+                                          @RequestParam("author_id") Long authorId) {
+        BookDto bookDto = bookService.update(bookId, title, pageCount, authorId);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(bookDto);
     }
 

@@ -34,6 +34,13 @@ public class Author {
         this.lastName = lastName;
     }
 
+    public Author(long id, String firstName, String lastName, List<Book> books) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.books = books;
+    }
+
     public Author(long id) {
         this.id = id;
     }

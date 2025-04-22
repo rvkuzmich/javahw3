@@ -52,15 +52,34 @@ class AuthorServiceTest {
 
     @Test
     void save() {
-        Author author = new Author(1L, "John", "Doe");
+        String firstName = "John";
+        String lastName = "Doe";
+        Author authorToSave = new Author();
+        authorToSave.setFirstName(firstName);
+        authorToSave.setLastName(lastName);
+        Author author = new Author(1L, firstName, lastName, new ArrayList<>());
+        AuthorDto authorDto = new AuthorDto(1L, firstName, lastName, new ArrayList<>());
+
+        Mockito.when(authorRepository.save(authorToSave)).thenReturn(author);
+        Mockito.when(authorMapper.toDto(author)).thenReturn(authorDto);
+
+        assertEquals(authorDto, authorService.save(author.getFirstName(), author.getLastName()));
+
+    }
+
+    @Test
+    void update() {
+        long authorId = 1L;
+        String firstName = "John";
+        String lastName = "Doe";
+        Author author = new Author(authorId, firstName, lastName);
         author.setBooks(List.of(new Book(1L)));
         AuthorDto authorDto = new AuthorDto(1L,"John", "Doe", List.of(Long.parseLong("1")));
 
         Mockito.when(authorMapper.toDto(author)).thenReturn(authorDto);
-        Mockito.when(authorMapper.toEntity(authorDto)).thenReturn(author);
         Mockito.when(authorRepository.save(author)).thenReturn(author);
 
-        assertEquals(authorDto, authorService.save(authorDto));
+        assertEquals(authorDto, authorService.update(authorId, firstName, lastName));
     }
 
     @Test
@@ -73,4 +92,5 @@ class AuthorServiceTest {
 
         Mockito.verify(authorRepository).deleteById(authorId);
     }
+
 }

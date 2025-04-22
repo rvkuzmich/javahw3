@@ -2,7 +2,9 @@ package kuzmich.services;
 
 import kuzmich.dto.BookDto;
 import kuzmich.mappers.BookMapper;
+import kuzmich.models.Author;
 import kuzmich.models.Book;
+import kuzmich.repositories.AuthorRepository;
 import kuzmich.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,10 +34,23 @@ public class BookService {
     }
 
     @Transactional
-    public BookDto save(BookDto bookDto) {
-        Book book = bookMapper.toEntity(bookDto);
-        book = bookRepository.save(book);
-        return bookMapper.toDto(book);
+    public BookDto save(String title, int pageCount, Long authorId) {
+        Author author = new Author(authorId);
+        Book book = new Book();
+        book.setTitle(title);
+        book.setPageCount(pageCount);
+        book.setAuthor(author);
+        return bookMapper.toDto(bookRepository.save(book));
+    }
+
+    @Transactional
+    public BookDto update(Long bookId, String title, int pageCount, Long authorId) {
+        Book book = new Book();
+        book.setId(bookId);
+        book.setTitle(title);
+        book.setPageCount(pageCount);
+        book.setAuthor(new Author(authorId));
+        return bookMapper.toDto(bookRepository.save(book));
     }
 
     @Transactional

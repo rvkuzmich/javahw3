@@ -59,7 +59,7 @@ class AuthorsControllerTest {
     void save() {
         AuthorDto authorDto = new AuthorDto(1L, "John", "Doe", new ArrayList<>());
 
-        Mockito.when(authorService.save(authorDto)).thenReturn(authorDto);
+        Mockito.when(authorService.save(authorDto.getFirstName(), authorDto.getLastName())).thenReturn(authorDto);
         ResponseEntity<AuthorDto> response = authorsController.save("John", "Doe");
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
@@ -70,7 +70,7 @@ class AuthorsControllerTest {
     void update() {
         AuthorDto authorDto = new AuthorDto(1L, "Jane", "Doe", new ArrayList<>());
 
-        Mockito.when(authorService.save(authorDto)).thenReturn(authorDto);
+        Mockito.when(authorService.update(authorDto.getId(), authorDto.getFirstName(), authorDto.getLastName())).thenReturn(authorDto);
 
         ResponseEntity<AuthorDto> response = authorsController.update(1L, "Jane", "Doe");
 
